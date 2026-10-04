@@ -1,0 +1,36 @@
+ENTER — site de música ONLINE
+==============================
+
+PUBLICAÇÃO NO GITHUB + RENDER
+
+1. Envie o conteúdo desta pasta para a raiz de um repositório GitHub.
+2. No Render, escolha New > Blueprint e ligue o repositório.
+3. O Render encontra o render.yaml e configura automaticamente o serviço.
+4. O comando de build é: npm install
+5. O comando de arranque é: npm start
+6. O health check é: /healthz
+7. O serviço usa /data como armazenamento persistente para músicas, prévias, capas e dados.
+
+IMPORTANTE SOBRE ARMAZENAMENTO
+- O projeto precisa de armazenamento persistente para que músicas e capas não desapareçam quando o serviço reiniciar ou for redeployado.
+- O render.yaml já configura um Persistent Disk de 10 GB em /data.
+- O Persistent Disk exige um plano de Web Service que o suporte.
+- Sem disco persistente, o site pode funcionar para teste, mas os ficheiros gravados localmente podem ser perdidos num reinício/redeploy.
+
+ADMINISTRADOR
+- O único dado para entrar como administrador é o nome "psique".
+- Não existe palavra-passe de administrador.
+
+CÓDIGO DAS MÚSICAS
+- O código de cada música continua separado.
+- É esse código que permite ouvir a música completa e fazer download.
+- Cada música é apagada automaticamente ao fim de 7 dias.
+
+SEGURANÇA E FUNCIONAMENTO
+- A música completa só é enviada depois do código correto.
+- A prévia tem 30 segundos.
+- Códigos das músicas são protegidos com scrypt.
+- Há limite de tentativas e bloqueio temporário.
+- A sessão do administrador usa cookie HttpOnly/SameSite.
+- Ficheiros e tamanhos são validados.
+- O servidor envia cabeçalhos de segurança.
